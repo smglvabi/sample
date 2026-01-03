@@ -31,4 +31,16 @@ public class Proposal {
                 ", bidAmount=" + bidAmount +
                 ", status='" + status + "'}";
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Proposal)) return false;
+        Proposal other = (Proposal) o;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
 }
