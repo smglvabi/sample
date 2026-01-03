@@ -18,4 +18,16 @@ public class User {
     public String toString(){
         return ("User{id=" + id + ", name='" + name + "', role='" + role + "'}");
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User other = (User) o;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
 }
