@@ -1,69 +1,108 @@
-import java.util.List;
 import java.util.Scanner;
-
 public class App {
+
     public static void main(String[] args) {
 
-        JobPortal portal = new JobPortal();
 
-        User client = new User(1, "Beka", "CLIENT");
-        User freelancer1 = new User(2, "Erke", "FREELANCER");
-        User freelancer2 = new User(3, "Toqtarbulan", "FREELANCER");
+        UserDAO userDAO = new UserDAO();
 
-        Job job1 = new Job(1, "Editor", client, 500);
-        Job job2 = new Job(2, "Logo Design", client, 300);
+        User u = new User(10, "TestUser", "CLIENT", "Astana");
 
-        Proposal p1 = new Proposal(101, job1, freelancer1, 450, "PENDING");
-        Proposal p2 = new Proposal(102, job1, freelancer2, 430, "PENDING");
+        userDAO.saveUser(u);                 // INSERT
+        User foundFromId = userDAO.findById(10);   // SELECT
+        foundFromId.printInfo();
 
-        portal.addUser(client);
-        portal.addUser(freelancer1);
-        portal.addUser(freelancer2);
-        portal.addJob(job1);
-        portal.addJob(job2);
-        portal.addProposal(p1);
-        portal.addProposal(p2);
+        userDAO.updateUserName(10, "Updated");
+        userDAO.deleteUser(10);
 
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        while (true) {
-            System.out.println("\n=== MENU ===");
-            System.out.println("1) Show all jobs");
-            System.out.println("2) Filter jobs by min budget");
-            System.out.println("3) Sort jobs by budget DESC");
-            System.out.println("4) Search jobs by title keyword");
-            System.out.println("0) Exit");
-            System.out.print("Choose: ");
+        System.out.print("Enter user name: ");
+        String name = scanner.nextLine();
 
-            int choice = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter role (CLIENT / FREELANCER): ");
+        String role = scanner.nextLine();
 
-            if (choice == 0) break;
+        System.out.print("Enter city: ");
+        String city = scanner.nextLine();
 
-            switch (choice) {
-                case 1 -> {
-                    for (Job j : portal.getJobs()) j.printInfo();
-                }
-                case 2 -> {
-                    System.out.print("Min budget: ");
-                    double min = Double.parseDouble(sc.nextLine());
-                    List<Job> res = portal.filterJobsByBudget(min);
-                    for (Job j : res) j.printInfo();
-                }
-                case 3 -> {
-                    List<Job> res = portal.sortJobsByBudgetDesc();
-                    for (Job j : res) j.printInfo();
-                }
-                case 4 -> {
-                    System.out.print("Keyword: ");
-                    String k = sc.nextLine();
-                    List<Job> res = portal.searchJobsByTitle(k);
-                    for (Job j : res) j.printInfo();
-                }
-                default -> System.out.println("Wrong option");
-            }
-        }
+        User user = new User(11, name, role, city);
+        userDAO.saveUser(user);
 
-        sc.close();
-        System.out.println("Bye!");
+        //updatin:
+        System.out.print("Enter old city to update: ");
+        String oldCity = scanner.nextLine();
+
+        System.out.print("Enter new city: ");
+        String newCity = scanner.nextLine();
+
+        userDAO.updateCity(oldCity, newCity);
+
+        //1-2 asik
+        //JobPortal portal = new JobPortal();   // переменная будет хранить объекты жобпортала
+        //        User client = new User(1, "Beka", "CLIENT");
+        //        User u1 = new User(1, "Beka", "CLIENT");
+        //        User u2 = new User(1, "Beka", "CLIENT");
+        //        User freelancer1 = new User(2, "Erke", "FREELANCER");
+        //        User freelancer2 = new User(3, "Toqtarbulan", "FREELANCER");
+        //        Job job1 = new Job(1, "Editor", client, 500);
+        //        Proposal p1 = new Proposal(101, job1, freelancer1, 450, "PENDING");
+        //        Proposal p2 = new Proposal(102, job1, freelancer2, 450, "PENDING");
+        //
+        //
+        //
+        //        portal.addUser(client);
+        //        portal.addUser(freelancer1);
+        //        portal.addUser(freelancer2);
+        //        portal.addJob(job1);
+        //        portal.addProposal(p1);
+        //        portal.addProposal(p2);
+        //
+        //
+        //        Scanner scanner = new Scanner(System.in);
+        //
+        //        System.out.print("Enter user name: ");
+        //        String name = scanner.nextLine();
+        //
+        //        System.out.print("Enter role (CLIENT / FREELANCER): ");
+        //        String role = scanner.nextLine();
+        //
+        //        User user = new User(1, name, role);
+        //        portal.addUser(user);
+        //
+        //        System.out.println("User added:");
+        //        user.printInfo();
+        //        System.out.print("Enter user id for search:");
+        //        int id = scanner.nextInt();
+        //
+        //
+        //        User foundFromPortal = portal.findUserById(id);
+        //
+        //        if (foundFromPortal != null){
+        //            System.out.println("User found:");
+        //            foundFromPortal.printInfo();
+        //        } else {
+        //            System.out.println("User with entered id is not found");
+        //        }
+        //        System.out.print("Enter minimum budget for search");
+        //        double minBudget = scanner.nextDouble();
+        //
+        //        System.out.println("Work with budget >=" + minBudget + ":");
+        //        for (Job j : portal.filterJobsByBudget(minBudget)){
+        //            j.printInfo();
+        //            scanner.close();
+        //        }
+        //
+        //        System.out.println("Works on descending budget:");
+        //        for (Job j : portal.sortJobsByBudgetDesc()){
+        //            j.printInfo();
+        //        }
+        //        System.out.println("Bids at an ascending rate:");
+        //        for (Proposal p : portal.sortProposalsByBid()) {
+        //            p.printInfo();
+        //        }
+        //System.out.println(u1.equals(u2));
+
+
     }
 }
